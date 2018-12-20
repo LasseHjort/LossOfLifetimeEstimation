@@ -8,7 +8,7 @@ get.knots <- function(data, k){
 #DLBCL
 knots <- log(get.knots(DLBCL, 5))
 fit_DLBCL <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = DLBCL, bhazard = "exp_haz", 
-                              smooth.formula = ~cb(x = log(FU_years), knots = knots))
+                              smooth.formula = ~cb(x = log(FU_years), knots = knots), ini.types = "cure")
 
 knots <- log(get.knots(DLBCL, 6))
 fit_DLBCL2 <- stpm2(Surv(FU_years, status) ~ -1, data = DLBCL, bhazard = DLBCL$exp_haz, 
@@ -21,7 +21,7 @@ fit_DLBCL3 <- stpm2(Surv(FU_years, status) ~ -1, data = DLBCL, bhazard = DLBCL$e
 #FL
 knots <- log(get.knots(FL, 5))
 fit_FL <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = FL, bhazard = "exp_haz", 
-                              smooth.formula = ~cb(x = log(FU_years), knots = knots))
+                              smooth.formula = ~cb(x = log(FU_years), knots = knots), ini.types = "cure")
 
 knots <- log(get.knots(FL, 6))
 fit_FL2 <- stpm2(Surv(FU_years, status) ~ -1, data = FL, bhazard = FL$exp_haz, 
@@ -35,7 +35,7 @@ fit_FL3 <- stpm2(Surv(FU_years, status) ~ -1, data = FL, bhazard = FL$exp_haz,
 #ML
 knots <- log(get.knots(ML, 5))
 fit_ML <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = ML, bhazard = "exp_haz", 
-                              smooth.formula = ~cb(x = log(FU_years), knots = knots))
+                              smooth.formula = ~cb(x = log(FU_years), knots = knots), ini.types = "cure")
 
 knots <- log(get.knots(ML, 6))
 fit_ML2 <- stpm2(Surv(FU_years, status) ~ -1, data = ML, bhazard = ML$exp_haz, 
@@ -573,7 +573,8 @@ fit_DLBCL_time <- GenFlexCureModel(Surv(FU_years, status) ~ -1,
                                    smooth.formula = ~ cb(x = log(FU_years), knots = knots.DLBCL),
                                    cr.formula = ~cb(x = age_years, knots = knots.age.DLBCL, intercept = F), 
                                    tvc.formula = ~cb(log(FU_years), knots = knots.time.DLBCL):
-                                     cb(x = age_years, knots = knots.age.DLBCL, intercept = F))
+                                     cb(x = age_years, knots = knots.age.DLBCL, intercept = F), 
+                                   ini.types = "cure")
 
 fit_DLBCL_time$knots_age <- knots.age.DLBCL
 

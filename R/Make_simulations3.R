@@ -18,6 +18,7 @@ if(any(grepl("Linux|linux", Sys.info()))){
   fig.out <- "."
   tab.out <- "."
   data.out <- "."
+  thesis <- FALSE
   
   #Table format
   tab.format <- "%.3f"
