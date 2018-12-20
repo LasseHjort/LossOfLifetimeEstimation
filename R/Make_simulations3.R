@@ -246,11 +246,11 @@ calc_AUCs <- function(res_list, plot.haz = F, plot.surv = F){
   knots <- log(get.knots(D, 5))
   fit_flex_mix1 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = D, bhazard = "exp_haz", 
                                     smooth.formula = ~ cb(x = log(FU_years), knots = knots), 
-                                    covariance = F, verbose = F)
+                                    covariance = F, verbose = F, ini.types = "cure")
   knots <- log(c(min(D$FU_years[D$status == 1]), 0.5, 1, 2, 5))
   fit_flex_mix2 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = D, bhazard = "exp_haz", 
                                     smooth.formula = ~ cb(x = log(FU_years), knots = knots), 
-                                    covariance = F, verbose = F)
+                                    covariance = F, verbose = F, ini.types = "cure")
   # fit_flex_mix2 <- GenFlexCureModel(Surv(FU_years, status) ~ 1, data = D, 
   #                                   bhazard = "exp_haz", 
   #                                   knots = log(c(min(D$FU_years), 0.5, 1, 2, 5)), 

@@ -339,12 +339,12 @@ L_fit <- lapply(diseases, function(disease){
     knots <- log(get.knots(data_new, 5))
     fit_flex_mix1 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = data_new, bhazard = "exp_haz", 
                                       smooth.formula = ~cb(x = log(FU_years), knots = knots), 
-                                      verbose = F, covariance = F)
+                                      verbose = F, covariance = F, ini.types = "cure")
     min.time <- min(data_new$FU_years[data_new$status == 1])
     knots <- log(c(min.time, 0.5, 1, 2, 5))
     fit_flex_mix2 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = data_new, bhazard = "exp_haz", 
                                       smooth.formula = ~cb(x = log(FU_years), knots = knots), 
-                                      verbose = F, covariance = F)
+                                      verbose = F, covariance = F, ini.types = "cure")
     
     #Plot the models
     # plot(fit_nelson, newdata = data.frame(age = 50), ylim = c(0, 1), ci = F, rug = F)
@@ -497,12 +497,12 @@ for(disease in diseases){
     knots <- log(get.knots(data_new, 5))
     fit_flex_mix1 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = data_new, bhazard = "exp_haz", 
                                       smooth.formula = ~cb(x = log(FU_years), knots = knots), 
-                                      verbose = F, covariance = F)
+                                      verbose = F, covariance = F, ini.types = "cure")
     min.time <- min(data_new$FU_years[data_new$status == 1])
     knots <- log(c(min.time, 0.5, 1, 2, 5))
     fit_flex_mix2 <- GenFlexCureModel(Surv(FU_years, status) ~ -1, data = data_new, bhazard = "exp_haz", 
                                       smooth.formula = ~cb(x = log(FU_years), knots = knots), 
-                                      verbose = F, covariance = F)
+                                      verbose = F, covariance = F, ini.types = "cure")
     
     #Expected survival
     expected <- survexp( ~ 1, rmap = list(age = age, sex = sex, year = diag_date),
@@ -599,7 +599,8 @@ fit_FL_time <- GenFlexCureModel(Surv(FU_years, status) ~ -1,
                                 smooth.formula = ~ cb(x = log(FU_years), knots = knots.FL, ortho = F),
                                 cr.formula = ~cb(x = age_years, knots = knots.age.FL, intercept = F, ortho = F), 
                                 tvc.formula = ~cb(log(FU_years), knots = knots.time.FL, ortho = F):
-                                  cb(x = age_years, knots = knots.age.FL, intercept = F, ortho = F))
+                                  cb(x = age_years, knots = knots.age.FL, intercept = F, ortho = F), 
+                                ini.types = "cure")
 fit_FL_time$covariance
 fit_FL_time$knots_age <- knots.age.FL
 
@@ -623,7 +624,8 @@ fit_ML_time <- GenFlexCureModel(Surv(FU_years, status) ~ -1,
                                 smooth.formula = ~ cb(x = log(FU_years), knots = knots.ML),
                                 cr.formula = ~cb(x = age_years, knots = knots.age.ML, intercept = F), 
                                 tvc.formula = ~cb(log(FU_years), knots = knots.time.ML):
-                                  cb(x = age_years, knots = knots.age.ML, intercept = F))
+                                  cb(x = age_years, knots = knots.age.ML, intercept = F), 
+                                ini.types = "cure")
 fit_ML_time$covariance
 fit_ML_time$knots_age <- knots.age.ML
 
